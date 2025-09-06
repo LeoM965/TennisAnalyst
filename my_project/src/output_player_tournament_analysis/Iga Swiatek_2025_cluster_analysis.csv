@@ -1,0 +1,4 @@
+Performance_Cluster,Rally_Length_Efficiency,Serve_Return_Rally_Balance,Short_Rally_Control,Long_Rally_Endurance,Rally_Progression_Score,Forehand_Dominance,Backhand_Versatility,Forehand_Power_Index,Backhand_Power_Index,Power_Balance_Index,Rally_Adaptability,Match_Control_Metric,Tactical_Intelligence,Court_Coverage_Efficiency,Win
+0,0.533,0.941,0.499,0.37,0.481,0.499,0.955,0.669,0.638,0.55,0.568,0.431,0.663,0.593,0.467
+1,0.448,0.95,0.534,0.625,0.58,0.521,0.969,1.127,1.012,0.611,0.722,0.645,0.736,0.513,0.875
+2,0.506,0.887,0.642,0.884,0.667,0.523,0.956,0.595,0.538,0.795,0.438,0.877,0.619,0.571,1.0

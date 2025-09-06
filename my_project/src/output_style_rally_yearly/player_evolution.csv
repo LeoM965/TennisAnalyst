@@ -1,0 +1,142 @@
+Player,Year,Style,Avg_Rally_Length,Power_Balance_Index,Rally_Adaptability,Tactical_Intelligence,Court_Coverage_Efficiency,Match_Control_Metric,Forehand_Power_Index,Backhand_Power_Index
+Amanda Anisimova,2017,All-Court Player,3.95,0.539,0.742,0.726,0.521,0.523,1.071,1.346
+Amanda Anisimova,2018,Power Hitter,3.333,0.379,0.669,0.685,0.574,0.408,0.747,0.749
+Amanda Anisimova,2019,Aggressive Baseliner,3.517,0.684,0.643,0.685,0.56,0.582,0.974,0.887
+Amanda Anisimova,2020,Defender,3.78,0.631,0.611,0.672,0.534,0.349,1.095,1.099
+Amanda Anisimova,2021,Power Hitter,3.15,0.321,0.592,0.669,0.594,0.449,0.949,0.625
+Amanda Anisimova,2022,Power Hitter,3.1,0.638,0.595,0.674,0.599,0.557,0.886,0.79
+Amanda Anisimova,2023,Power Hitter,3.22,0.341,0.671,0.71,0.587,0.468,0.786,0.673
+Amanda Anisimova,2024,Power Hitter,3.038,0.688,0.606,0.681,0.606,0.47,0.864,0.716
+Amanda Anisimova,2025,Power Hitter,3.339,0.756,0.627,0.684,0.575,0.539,0.89,0.809
+Aryna Sabalenka,2016,Aggressive Baseliner,3.2,0.569,0.551,0.625,0.59,0.599,0.678,0.828
+Aryna Sabalenka,2017,Aggressive Baseliner,2.96,0.719,0.528,0.643,0.612,0.541,0.772,0.749
+Aryna Sabalenka,2018,Power Hitter,3.179,0.616,0.641,0.682,0.591,0.543,0.915,0.84
+Aryna Sabalenka,2019,Aggressive Baseliner,3.32,0.587,0.625,0.675,0.578,0.554,0.862,0.842
+Aryna Sabalenka,2020,Aggressive Baseliner,3.605,0.619,0.625,0.665,0.552,0.594,0.977,0.948
+Aryna Sabalenka,2021,Aggressive Baseliner,3.069,0.639,0.598,0.65,0.602,0.58,0.771,0.725
+Aryna Sabalenka,2022,Aggressive Baseliner,3.167,0.623,0.609,0.655,0.591,0.545,0.847,0.791
+Aryna Sabalenka,2023,Aggressive Baseliner,3.181,0.631,0.612,0.661,0.591,0.609,0.772,0.725
+Aryna Sabalenka,2024,Aggressive Baseliner,3.297,0.601,0.601,0.655,0.58,0.581,0.832,0.74
+Aryna Sabalenka,2025,Aggressive Baseliner,3.355,0.596,0.573,0.625,0.575,0.582,0.794,0.756
+Clara Tauson,2019,Counter Puncher,4.45,0.447,0.818,0.732,0.477,0.505,1.63,1.096
+Clara Tauson,2020,Defender,4.3,0.63,0.613,0.689,0.494,0.69,2.176,1.574
+Clara Tauson,2021,Power Hitter,3.883,0.67,0.682,0.681,0.527,0.569,0.89,0.805
+Clara Tauson,2022,All-Court Player,3.675,0.471,0.66,0.676,0.543,0.594,0.972,0.931
+Clara Tauson,2023,All-Court Player,4.72,0.353,0.689,0.647,0.461,0.507,1.302,0.818
+Clara Tauson,2024,Power Hitter,3.3,0.374,0.703,0.636,0.579,0.49,0.749,0.578
+Clara Tauson,2025,Power Hitter,3.4,0.573,0.612,0.617,0.571,0.507,0.768,0.649
+Coco Gauff,2019,Defender,4.458,0.565,0.687,0.69,0.48,0.547,1.219,0.901
+Coco Gauff,2020,All-Court Player,3.762,0.395,0.649,0.676,0.536,0.443,1.128,1.091
+Coco Gauff,2021,Aggressive Baseliner,3.783,0.744,0.659,0.692,0.536,0.58,0.899,0.899
+Coco Gauff,2022,Defender,4.135,0.527,0.682,0.712,0.507,0.503,1.119,0.88
+Coco Gauff,2023,All-Court Player,4.306,0.574,0.699,0.734,0.492,0.584,1.349,0.907
+Coco Gauff,2024,Defender,4.117,0.61,0.732,0.748,0.507,0.549,1.368,1.011
+Coco Gauff,2025,Defender,4.156,0.671,0.643,0.71,0.506,0.549,1.227,0.883
+Ekaterina Alexandrova,2016,Power Hitter,3.2,0.443,0.779,0.713,0.583,0.525,0.833,1.449
+Ekaterina Alexandrova,2017,Power Hitter,3.05,0.843,0.604,0.654,0.601,0.427,0.48,0.627
+Ekaterina Alexandrova,2018,Aggressive Baseliner,3.4,0.692,0.699,0.726,0.571,0.577,0.791,0.827
+Ekaterina Alexandrova,2019,Power Hitter,3.806,0.699,0.712,0.704,0.535,0.513,1.062,1.163
+Ekaterina Alexandrova,2020,Power Hitter,3.4,0.673,0.587,0.69,0.574,0.455,1.18,0.843
+Ekaterina Alexandrova,2021,Power Hitter,3.6,0.627,0.625,0.689,0.55,0.563,1.205,1.188
+Ekaterina Alexandrova,2022,Power Hitter,3.475,0.505,0.575,0.66,0.562,0.542,1.031,0.894
+Ekaterina Alexandrova,2023,All-Court Player,3.83,0.502,0.7,0.715,0.531,0.537,1.267,1.34
+Ekaterina Alexandrova,2024,Power Hitter,3.136,0.579,0.605,0.672,0.594,0.525,0.89,1.045
+Ekaterina Alexandrova,2025,Aggressive Baseliner,3.608,0.573,0.621,0.67,0.552,0.597,0.885,0.921
+Elena Rybakina,2018,Defender,3.7,0.2,0.601,0.674,0.533,0.327,1.25,1.25
+Elena Rybakina,2019,Power Hitter,3.318,0.688,0.615,0.676,0.577,0.564,0.921,0.793
+Elena Rybakina,2020,Power Hitter,3.825,0.637,0.699,0.702,0.534,0.535,1.397,1.109
+Elena Rybakina,2021,All-Court Player,3.567,0.542,0.689,0.723,0.555,0.485,1.4,1.028
+Elena Rybakina,2022,Aggressive Baseliner,3.516,0.659,0.676,0.709,0.562,0.582,1.05,0.782
+Elena Rybakina,2023,Aggressive Baseliner,3.426,0.62,0.648,0.699,0.569,0.581,0.974,0.847
+Elena Rybakina,2024,Aggressive Baseliner,3.547,0.551,0.659,0.702,0.557,0.611,1.032,0.855
+Elena Rybakina,2025,All-Court Player,3.374,0.451,0.665,0.705,0.573,0.573,0.959,0.824
+Elina Svitolina,2013,Defender,3.6,0.476,0.688,0.689,0.55,0.377,0.533,0.714
+Elina Svitolina,2014,Defender,4.085,0.603,0.722,0.723,0.509,0.452,1.153,0.958
+Elina Svitolina,2015,Counter Puncher,4.784,0.595,0.685,0.696,0.456,0.498,1.242,1.355
+Elina Svitolina,2016,Defender,5.189,0.563,0.734,0.72,0.429,0.539,1.504,1.061
+Elina Svitolina,2017,Counter Puncher,4.616,0.656,0.733,0.715,0.47,0.581,1.324,1.253
+Elina Svitolina,2018,Defender,4.574,0.561,0.715,0.721,0.475,0.549,1.293,1.235
+Elina Svitolina,2019,Defender,4.734,0.492,0.721,0.712,0.459,0.535,1.399,1.283
+Elina Svitolina,2020,Defender,4.75,0.571,0.678,0.709,0.463,0.576,1.205,1.142
+Elina Svitolina,2021,Defender,4.477,0.591,0.724,0.716,0.478,0.535,1.264,1.139
+Elina Svitolina,2022,Defender,4.1,0.625,0.755,0.732,0.505,0.454,1.254,0.88
+Elina Svitolina,2023,All-Court Player,4.309,0.505,0.747,0.738,0.493,0.562,1.255,1.062
+Elina Svitolina,2024,Defender,4.156,0.553,0.682,0.706,0.505,0.512,1.106,0.958
+Elina Svitolina,2025,All-Court Player,4.088,0.545,0.693,0.713,0.509,0.534,1.113,1.237
+Emma Navarro,2021,Defender,6.3,0.435,0.766,0.712,0.35,0.332,1.562,1.324
+Emma Navarro,2022,Defender,4.95,0.642,0.826,0.739,0.445,0.42,1.922,1.157
+Emma Navarro,2023,Power Hitter,3.871,0.563,0.688,0.674,0.53,0.534,0.73,0.822
+Emma Navarro,2024,Defender,4.368,0.523,0.708,0.694,0.491,0.516,1.344,1.03
+Emma Navarro,2025,Defender,4.77,0.563,0.716,0.693,0.457,0.507,1.15,0.883
+Iga Swiatek,2018,Aggressive Baseliner,3.3,0.645,0.66,0.679,0.581,0.732,0.777,0.59
+Iga Swiatek,2019,Power Hitter,3.2,0.641,0.626,0.671,0.588,0.442,0.869,0.766
+Iga Swiatek,2020,Aggressive Baseliner,4.192,0.754,0.645,0.682,0.5,0.633,1.026,0.952
+Iga Swiatek,2021,Aggressive Baseliner,3.751,0.587,0.655,0.69,0.54,0.608,0.881,0.865
+Iga Swiatek,2022,Aggressive Baseliner,3.993,0.583,0.649,0.701,0.517,0.637,1.015,0.998
+Iga Swiatek,2023,Aggressive Baseliner,3.923,0.661,0.633,0.697,0.523,0.656,0.923,0.851
+Iga Swiatek,2024,Aggressive Baseliner,3.946,0.653,0.659,0.703,0.522,0.653,0.97,0.967
+Iga Swiatek,2025,Aggressive Baseliner,3.659,0.619,0.629,0.694,0.548,0.61,0.897,0.818
+Jasmine Paolini,2016,Defender,4.7,0.626,0.744,0.749,0.457,0.504,1.706,1.424
+Jasmine Paolini,2019,Defender,3.95,0.432,0.614,0.678,0.521,0.362,1.164,0.923
+Jasmine Paolini,2020,Defender,4.425,0.411,0.604,0.683,0.486,0.401,1.213,0.989
+Jasmine Paolini,2021,Defender,4.6,0.721,0.72,0.736,0.467,0.57,1.403,1.128
+Jasmine Paolini,2022,Defender,4.06,0.579,0.554,0.665,0.513,0.555,1.34,1.041
+Jasmine Paolini,2023,Defender,4.333,0.624,0.668,0.704,0.489,0.355,1.21,0.928
+Jasmine Paolini,2024,Defender,4.121,0.556,0.684,0.71,0.509,0.507,1.244,1.077
+Jasmine Paolini,2025,All-Court Player,3.9,0.505,0.597,0.675,0.524,0.557,0.985,0.754
+Jessica Pegula,2015,All-Court Player,3.7,0.371,0.632,0.666,0.541,0.631,1.579,1.307
+Jessica Pegula,2016,Power Hitter,3.4,0.917,0.59,0.68,0.567,0.398,0.965,0.739
+Jessica Pegula,2018,Aggressive Baseliner,3.5,0.768,0.585,0.635,0.56,0.629,1.091,0.836
+Jessica Pegula,2019,Power Hitter,3.52,0.637,0.707,0.682,0.558,0.52,0.894,0.663
+Jessica Pegula,2020,Defender,4.16,0.863,0.772,0.703,0.501,0.475,1.064,0.894
+Jessica Pegula,2021,Power Hitter,3.893,0.704,0.67,0.672,0.525,0.463,0.96,0.945
+Jessica Pegula,2022,Defender,4.076,0.553,0.703,0.681,0.512,0.46,1.045,1.01
+Jessica Pegula,2023,Power Hitter,4.045,0.661,0.682,0.677,0.512,0.543,0.957,0.857
+Jessica Pegula,2024,Power Hitter,3.933,0.689,0.691,0.67,0.524,0.515,1.11,0.973
+Jessica Pegula,2025,All-Court Player,4.111,0.581,0.706,0.67,0.508,0.535,1.051,0.917
+Karolina Muchova,2018,Counter Puncher,4.3,0.323,0.909,0.715,0.484,0.565,1.494,1.136
+Karolina Muchova,2019,All-Court Player,3.95,0.55,0.678,0.618,0.521,0.558,0.988,0.81
+Karolina Muchova,2020,Defender,4.186,0.551,0.771,0.678,0.501,0.437,1.358,0.927
+Karolina Muchova,2021,All-Court Player,4.182,0.673,0.754,0.673,0.503,0.561,1.143,0.988
+Karolina Muchova,2022,All-Court Player,4.371,0.429,0.739,0.643,0.487,0.469,0.968,0.681
+Karolina Muchova,2023,All-Court Player,4.0,0.536,0.673,0.636,0.516,0.543,1.019,0.782
+Karolina Muchova,2024,All-Court Player,3.791,0.463,0.705,0.647,0.533,0.516,0.902,0.599
+Karolina Muchova,2025,Power Hitter,3.833,0.557,0.674,0.631,0.529,0.432,0.848,0.683
+Madison Keys,2014,All-Court Player,3.362,0.424,0.747,0.717,0.573,0.6,0.924,0.901
+Madison Keys,2015,Aggressive Baseliner,3.382,0.645,0.647,0.691,0.573,0.615,0.868,0.893
+Madison Keys,2016,Power Hitter,3.658,0.614,0.711,0.715,0.548,0.447,0.998,0.985
+Madison Keys,2017,Aggressive Baseliner,3.586,0.615,0.579,0.678,0.555,0.669,0.976,0.791
+Madison Keys,2018,All-Court Player,3.545,0.559,0.621,0.68,0.56,0.496,1.157,0.981
+Madison Keys,2019,All-Court Player,3.436,0.378,0.619,0.673,0.567,0.556,1.097,0.953
+Madison Keys,2020,Power Hitter,3.5,0.648,0.804,0.75,0.558,0.481,0.961,1.03
+Madison Keys,2021,Aggressive Baseliner,2.95,0.695,0.591,0.652,0.615,0.631,0.747,0.724
+Madison Keys,2022,Power Hitter,3.475,0.537,0.566,0.655,0.563,0.547,0.804,0.691
+Madison Keys,2023,All-Court Player,3.791,0.461,0.656,0.682,0.535,0.575,1.066,0.89
+Madison Keys,2024,Power Hitter,3.62,0.553,0.663,0.675,0.547,0.49,0.825,0.68
+Madison Keys,2025,Power Hitter,3.265,0.709,0.577,0.638,0.583,0.553,0.857,0.73
+Mirra Andreeva,2022,Counter Puncher,5.6,0.476,0.76,0.706,0.397,0.415,1.786,3.077
+Mirra Andreeva,2023,Counter Puncher,4.86,0.618,0.793,0.741,0.447,0.551,0.968,1.098
+Mirra Andreeva,2024,Counter Puncher,4.826,0.662,0.731,0.71,0.455,0.55,1.203,1.321
+Mirra Andreeva,2025,All-Court Player,4.348,0.539,0.69,0.691,0.491,0.59,0.997,0.999
+Paula Badosa,2015,Baseline Grinder,3.5,0.727,0.479,0.6,0.559,0.184,0.583,0.769
+Paula Badosa,2019,Defender,4.66,0.472,0.698,0.725,0.467,0.457,1.215,0.721
+Paula Badosa,2020,Defender,3.88,0.757,0.683,0.704,0.525,0.415,1.009,0.867
+Paula Badosa,2021,Defender,4.176,0.549,0.712,0.719,0.504,0.496,1.42,1.383
+Paula Badosa,2022,Defender,4.255,0.511,0.687,0.707,0.498,0.481,1.201,0.98
+Paula Badosa,2023,Power Hitter,3.8,0.548,0.704,0.704,0.532,0.471,1.272,1.25
+Paula Badosa,2024,Defender,4.088,0.609,0.657,0.69,0.512,0.513,1.107,1.165
+Paula Badosa,2025,Aggressive Baseliner,4.0,0.682,0.688,0.698,0.517,0.6,1.087,1.031
+Qinwen Zheng,2021,All-Court Player,3.2,0.222,0.815,0.738,0.582,0.589,0.672,0.909
+Qinwen Zheng,2022,Defender,4.023,0.549,0.747,0.747,0.518,0.457,1.37,1.0
+Qinwen Zheng,2023,All-Court Player,3.8,0.441,0.649,0.702,0.537,0.549,1.095,0.937
+Qinwen Zheng,2024,All-Court Player,3.656,0.513,0.703,0.723,0.549,0.587,1.066,0.844
+Qinwen Zheng,2025,All-Court Player,3.9,0.536,0.65,0.704,0.524,0.523,1.057,0.717
+Tatjana Maria,2015,Baseline Grinder,4.767,0.223,0.709,0.486,0.463,0.634,0.576,0.137
+Tatjana Maria,2017,Baseline Grinder,4.825,0.208,0.585,0.539,0.454,0.416,1.044,0.244
+Tatjana Maria,2018,Baseline Grinder,4.05,0.594,0.552,0.43,0.512,0.494,0.418,0.209
+Tatjana Maria,2019,Baseline Grinder,4.75,0.75,0.778,0.499,0.463,0.343,0.617,0.085
+Tatjana Maria,2021,Baseline Grinder,5.6,0.16,0.725,0.477,0.409,0.434,1.198,0.256
+Tatjana Maria,2022,Baseline Grinder,4.371,0.489,0.718,0.461,0.494,0.549,0.505,0.076
+Tatjana Maria,2023,Baseline Grinder,4.35,0.638,0.683,0.466,0.484,0.371,0.441,0.128
+Tatjana Maria,2024,Baseline Grinder,4.4,0.643,0.689,0.481,0.486,0.612,0.922,0.464
+Tatjana Maria,2025,Baseline Grinder,4.4,0.317,0.596,0.402,0.479,0.377,0.13,0.05
