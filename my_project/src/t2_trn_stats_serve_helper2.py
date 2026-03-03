@@ -1,143 +1,138 @@
 import pandas as pd
 import numpy as np
-
 from t2_trn_stats_serve_helper1 import learn_serve_weights
+from constants import SERVE_PCT_COLS
 
-
-def calculate_serve_indicators(df):
-    indicators = df.copy()
-
-    cols = df.columns.tolist()
-
-    column_mapping = {}
-    if len(cols) >= 19:
-        column_mapping = {
-            cols[3]: 'Overall_Unret',
-            cols[4]: 'Overall_W3',
-            cols[5]: 'Overall_RiP',
-            cols[6]: 'First_Unret',
-            cols[7]: 'First_W3',
-            cols[8]: 'First_RiP',
-            cols[9]: 'First_D_Wide',
-            cols[10]: 'First_A_Wide',
-            cols[11]: 'First_BP_Wide',
-            cols[12]: 'Second_Unret',
-            cols[13]: 'Second_W3',
-            cols[14]: 'Second_RiP',
-            cols[15]: 'Second_D_Wide',
-            cols[16]: 'Second_A_Wide',
-            cols[17]: 'Second_BP_Wide',
-            cols[18]: '2ndAgg'
+def calculate_serve_indicators(dataframe):
+    serve_indicators_df = dataframe.copy()
+    
+    original_column_list = dataframe.columns.tolist()
+    
+    has_necessary_columns = len(original_column_list) >= 19
+    if has_necessary_columns:
+        serve_column_mapping = {
+            original_column_list[3]: 'Overall_Unret',
+            original_column_list[4]: 'Overall_W3',
+            original_column_list[5]: 'Overall_RiP',
+            original_column_list[6]: 'First_Unret',
+            original_column_list[7]: 'First_W3',
+            original_column_list[8]: 'First_RiP',
+            original_column_list[9]: 'First_D_Wide',
+            original_column_list[10]: 'First_A_Wide',
+            original_column_list[11]: 'First_BP_Wide',
+            original_column_list[12]: 'Second_Unret',
+            original_column_list[13]: 'Second_W3',
+            original_column_list[14]: 'Second_RiP',
+            original_column_list[15]: 'Second_D_Wide',
+            original_column_list[16]: 'Second_A_Wide',
+            original_column_list[17]: 'Second_BP_Wide',
+            original_column_list[18]: 'Second_Serve_Aggression_Raw'
         }
-
-    indicators = indicators.rename(columns=column_mapping)
-
-    pct_cols = ['Overall_Unret', 'Overall_W3', 'Overall_RiP', 'First_Unret', 'First_W3', 'First_RiP',
-                'First_D_Wide', 'First_A_Wide', 'First_BP_Wide', 'Second_Unret', 'Second_W3',
-                'Second_RiP', 'Second_D_Wide', 'Second_A_Wide', 'Second_BP_Wide']
-
-    for col in pct_cols:
-        if col in indicators.columns:
-            indicators[col] = indicators[col].astype(str).replace(['-', '', 'nan', 'NaN'], np.nan)
-            indicators[col] = pd.to_numeric(indicators[col].astype(str).str.rstrip('%'), errors='coerce') / 100
-
-    if '2ndAgg' in indicators.columns:
-        indicators['2ndAgg'] = pd.to_numeric(indicators['2ndAgg'], errors='coerce')
-        indicators['2ndAgg'] = np.abs(indicators['2ndAgg']) / 100
-
-    serve_weights, type_weights = learn_serve_weights(indicators)
-    indicators['Serve_Power'] = indicators['Overall_Unret'].fillna(0)
-    indicators['Serve_Quick_Points'] = indicators['Overall_W3'].fillna(0)
-    indicators['Serve_Rally_Control'] = indicators['Overall_RiP'].fillna(0)
-    indicators['First_Serve_Power'] = indicators['First_Unret'].fillna(0)
-
-    indicators['First_Serve_Dominance'] = (
-            indicators['First_Unret'].fillna(0) * 0.4 +
-            indicators['First_W3'].fillna(0) * 0.35 +
-            indicators['First_RiP'].fillna(0) * 0.25
-    )
-
-    indicators['Second_Serve_Aggression'] = indicators['2ndAgg'].fillna(0)
-
-    indicators['Second_Serve_Effectiveness'] = (
-            indicators['Second_Unret'].fillna(0) * 0.3 +
-            indicators['Second_W3'].fillna(0) * 0.4 +
-            indicators['Second_RiP'].fillna(0) * 0.3
-    )
-
-    first_placement_cols = ['First_D_Wide', 'First_A_Wide', 'First_BP_Wide']
-    second_placement_cols = ['Second_D_Wide', 'Second_A_Wide', 'Second_BP_Wide']
-
-    first_placement_values = []
-    for col in first_placement_cols:
-        if col in indicators.columns:
-            first_placement_values.append(indicators[col].fillna(0))
-
-    if first_placement_values:
-        indicators['First_Serve_Placement_Strategy'] = np.mean(first_placement_values, axis=0)
+        serve_indicators_df = serve_indicators_df.rename(columns=serve_column_mapping)
+        
+    for serve_pct_col in SERVE_PCT_COLS:
+        if serve_pct_col in serve_indicators_df.columns:
+            raw_serve_strings = serve_indicators_df[serve_pct_col].astype(str)
+            clean_serve_pct = raw_serve_strings.str.rstrip('%')
+            
+            numeric_serve_ratios = pd.to_numeric(clean_serve_pct, errors='coerce') / 100
+            serve_indicators_df[serve_pct_col] = numeric_serve_ratios
+            
+    if 'Second_Serve_Aggression_Raw' in serve_indicators_df.columns:
+        raw_aggression_values = pd.to_numeric(serve_indicators_df['Second_Serve_Aggression_Raw'], errors='coerce')
+        absolute_aggression_magnitude = np.abs(raw_aggression_values)
+        
+        serve_indicators_df['Second_Serve_Aggression'] = absolute_aggression_magnitude / 100
     else:
-        indicators['First_Serve_Placement_Strategy'] = 0
-
-    second_placement_values = []
-    for col in second_placement_cols:
-        if col in indicators.columns:
-            second_placement_values.append(indicators[col].fillna(0))
-
-    if second_placement_values:
-        indicators['Second_Serve_Placement_Strategy'] = np.mean(second_placement_values, axis=0)
+        serve_indicators_df['Second_Serve_Aggression'] = 0
+        
+    calc_serve_weights, calc_type_weights = learn_serve_weights(serve_indicators_df)
+    
+    serve_indicators_df['Serve_Power'] = serve_indicators_df['Overall_Unret'].fillna(0)
+    serve_indicators_df['Serve_Quick_Points'] = serve_indicators_df['Overall_W3'].fillna(0)
+    serve_indicators_df['Serve_Rally_Control'] = serve_indicators_df['Overall_RiP'].fillna(0)
+    serve_indicators_df['First_Serve_Power'] = serve_indicators_df['First_Unret'].fillna(0)
+    
+    first_serve_logic_components = [
+        serve_indicators_df['First_Unret'].fillna(0) * 0.4,
+        serve_indicators_df['First_W3'].fillna(0) * 0.35,
+        serve_indicators_df['First_RiP'].fillna(0) * 0.25
+    ]
+    serve_indicators_df['First_Serve_Dominance'] = sum(first_serve_logic_components)
+    
+    second_serve_logic_components = [
+        serve_indicators_df['Second_Unret'].fillna(0) * 0.3,
+        serve_indicators_df['Second_W3'].fillna(0) * 0.4,
+        serve_indicators_df['Second_RiP'].fillna(0) * 0.3
+    ]
+    serve_indicators_df['Second_Serve_Effectiveness'] = sum(second_serve_logic_components)
+    
+    first_placement_headers = ['First_D_Wide', 'First_A_Wide', 'First_BP_Wide']
+    first_placement_metrics = [serve_indicators_df[col].fillna(0) for col in first_placement_headers if col in serve_indicators_df.columns]
+    
+    if first_placement_metrics:
+        serve_indicators_df['First_Serve_Placement_Strategy'] = np.mean(first_placement_metrics, axis=0)
     else:
-        indicators['Second_Serve_Placement_Strategy'] = 0
-
-    indicators['Serve_Type_Adaptability'] = (
-            indicators['First_Serve_Dominance'] * type_weights[0] +
-            indicators['Second_Serve_Effectiveness'] * type_weights[1]
-    )
-
-    first_second_diff = abs(
-        indicators['First_Serve_Dominance'] - indicators['Second_Serve_Effectiveness']
-    )
-    indicators['Serve_Consistency'] = np.exp(-first_second_diff * 2)
-
-    power_score = (indicators['Serve_Power'] + indicators['First_Serve_Power']) / 2
-    control_score = (indicators['Serve_Rally_Control'] + indicators['Serve_Quick_Points']) / 2
-    indicators['Power_Control_Balance'] = np.tanh(power_score / (control_score + 0.01))
-
-    bp_performance_values = []
-    bp_cols = ['First_BP_Wide', 'Second_BP_Wide']
-    for col in bp_cols:
-        if col in indicators.columns:
-            bp_performance_values.append(indicators[col].fillna(0))
-
-    if bp_performance_values:
-        indicators['Clutch_Serving'] = np.mean(bp_performance_values, axis=0)
+        serve_indicators_df['First_Serve_Placement_Strategy'] = 0
+        
+    second_placement_headers = ['Second_D_Wide', 'Second_A_Wide', 'Second_BP_Wide']
+    second_placement_metrics = [serve_indicators_df[col].fillna(0) for col in second_placement_headers if col in serve_indicators_df.columns]
+    
+    if second_placement_metrics:
+        serve_indicators_df['Second_Serve_Placement_Strategy'] = np.mean(second_placement_metrics, axis=0)
     else:
-        indicators['Clutch_Serving'] = 0.5
-
-    placement_versatility = (
-                                    indicators['First_Serve_Placement_Strategy'] +
-                                    indicators['Second_Serve_Placement_Strategy']
-                            ) / 2
-
-    indicators['Serve_Tactical_Intelligence'] = (
-            placement_versatility * 0.4 +
-            indicators['Serve_Type_Adaptability'] * 0.4 +
-            indicators['Clutch_Serving'] * 0.2
+        serve_indicators_df['Second_Serve_Placement_Strategy'] = 0
+        
+    serve_adaptation_formula = (
+        serve_indicators_df['First_Serve_Dominance'] * calc_type_weights[0] + 
+        serve_indicators_df['Second_Serve_Effectiveness'] * calc_type_weights[1]
     )
-
-    if 'Result' in indicators.columns:
-        is_win = indicators['Result'].str.contains('W', na=False)
-        win_multiplier = np.where(is_win, 1.1, 0.9)
-        indicators['Serve_Match_Impact'] = indicators['Serve_Type_Adaptability'] * win_multiplier
+    serve_indicators_df['Serve_Type_Adaptability'] = serve_adaptation_formula
+    
+    score_gap_between_serves = abs(serve_indicators_df['First_Serve_Dominance'] - serve_indicators_df['Second_Serve_Effectiveness'])
+    serve_indicators_df['Serve_Consistency'] = np.exp(-score_gap_between_serves * 2)
+    
+    aggregated_power_score = (serve_indicators_df['Serve_Power'] + serve_indicators_df['First_Serve_Power']) / 2
+    aggregated_control_score = (serve_indicators_df['Serve_Rally_Control'] + serve_indicators_df['Serve_Quick_Points']) / 2
+    serve_indicators_df['Power_Control_Balance'] = np.tanh(aggregated_power_score / (aggregated_control_score + 0.01))
+    
+    critical_point_headers = ['First_BP_Wide', 'Second_BP_Wide']
+    critical_point_metrics = [serve_indicators_df[col].fillna(0) for col in critical_point_headers if col in serve_indicators_df.columns]
+    
+    if critical_point_metrics:
+        serve_indicators_df['Clutch_Serving'] = np.mean(critical_point_metrics, axis=0)
     else:
-        indicators['Serve_Match_Impact'] = indicators['Serve_Type_Adaptability']
-
-    indicators['Overall_Serve_Game'] = (
-            indicators['Serve_Power'] * 0.2 +
-            indicators['Serve_Quick_Points'] * 0.15 +
-            indicators['Serve_Rally_Control'] * 0.15 +
-            indicators['Serve_Type_Adaptability'] * 0.25 +
-            indicators['Serve_Tactical_Intelligence'] * 0.15 +
-            indicators['Power_Control_Balance'] * 0.1
+        serve_indicators_df['Clutch_Serving'] = 0.5
+        
+    average_placement_versatility = (
+        serve_indicators_df['First_Serve_Placement_Strategy'] + 
+        serve_indicators_df['Second_Serve_Placement_Strategy']
+    ) / 2
+    
+    tactical_intelligence_score = (
+        average_placement_versatility * 0.4 + 
+        serve_indicators_df['Serve_Type_Adaptability'] * 0.4 + 
+        serve_indicators_df['Clutch_Serving'] * 0.2
     )
-
-    return indicators
+    serve_indicators_df['Serve_Tactical_Intelligence'] = tactical_intelligence_score
+    
+    if 'Result' in serve_indicators_df.columns:
+        match_result_strings = serve_indicators_df['Result']
+        win_status_mask = match_result_strings.str.contains('W', na=False)
+        result_driven_multiplier = np.where(win_status_mask, 1.1, 0.9)
+        
+        serve_indicators_df['Serve_Match_Impact'] = serve_indicators_df['Serve_Type_Adaptability'] * result_driven_multiplier
+    else:
+        serve_indicators_df['Serve_Match_Impact'] = serve_indicators_df['Serve_Type_Adaptability']
+        
+    total_serve_game_formula = (
+        serve_indicators_df['Serve_Power'] * 0.2 + 
+        serve_indicators_df['Serve_Quick_Points'] * 0.15 + 
+        serve_indicators_df['Serve_Rally_Control'] * 0.15 + 
+        serve_indicators_df['Serve_Type_Adaptability'] * 0.25 + 
+        serve_indicators_df['Serve_Tactical_Intelligence'] * 0.15 + 
+        serve_indicators_df['Power_Control_Balance'] * 0.1
+    )
+    serve_indicators_df['Overall_Serve_Game'] = total_serve_game_formula
+    
+    return serve_indicators_df

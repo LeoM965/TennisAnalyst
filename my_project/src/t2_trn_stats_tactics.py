@@ -2,124 +2,94 @@ import pandas as pd
 import numpy as np
 import os
 import shutil
-
 from t2_trn_stats_rally_helper1 import extract_year
 from t2_trn_stats_tactics_helper2 import calculate_tactics_indicators
+from constants import WTA_MCP_TACTICS, TACTICS_INDICATORS
 
-
-def analyze_tactics_data(csv_path='wta_mcp_tactics.csv'):
-    output_dir = 'output_tactics'
-
-    if os.path.exists(output_dir):
-        shutil.rmtree(output_dir)
-    os.makedirs(output_dir)
-
-    df = pd.read_csv(csv_path)
-    df.columns = df.columns.str.strip()
-
-    df['Year'] = df['Match'].apply(extract_year)
-    df = df.dropna(subset=['Year'])
-
-    df_with_indicators = calculate_tactics_indicators(df)
-
-    indicators = [
-        'Net_Game_Frequency',
-        'Net_Game_Effectiveness',
-        'Net_Game_Impact',
-        'Serve_Volley_Frequency',
-        'Serve_Volley_Effectiveness',
-        'Serve_Volley_Impact',
-        'Forehand_Power',
-        'Backhand_Power',
-        'Groundstroke_Balance',
-        'Overall_Groundstroke_Power',
-        'Forehand_DTL_Control',
-        'Forehand_IO_Control',
-        'Backhand_DTL_Control',
-        'Directional_Versatility',
-        'Drop_Shot_Usage',
-        'Drop_Shot_Effectiveness',
-        'Drop_Shot_Impact',
-        'Rally_Aggression',
-        'Return_Aggression',
-        'Overall_Aggression',
-        'Court_Position_Strategy',
-        'Tactical_Versatility',
-        'Power_Finesse_Balance',
-        'Tactical_Adaptability',
-        'Tactical_Match_Impact',
-        'Offensive_Efficiency',
-        'Tactical_Intelligence',
-        'Overall_Tactical_Game'
-    ]
-
-    agg_dict = {}
-    if 'Net_Freq' in df_with_indicators.columns:
-        agg_dict['Net_Freq'] = ['mean', 'count']
+def analyze_tactics_data(csv_path=WTA_MCP_TACTICS):
+    output_directory = 'output_tactics'
+    
+    if os.path.exists(output_directory):
+        shutil.rmtree(output_directory)
+    os.makedirs(output_directory)
+    
+    dataframe = pd.read_csv(csv_path)
+    dataframe.columns = dataframe.columns.str.strip()
+    
+    dataframe['Year'] = dataframe['Match'].apply(extract_year)
+    dataframe = dataframe.dropna(subset=['Year'])
+    
+    dataframe_with_indicators = calculate_tactics_indicators(dataframe)
+    
+    if 'Net_Freq' in dataframe_with_indicators.columns:
+        main_aggregation_key = 'Net_Freq'
     else:
-        agg_dict['Net_Game_Frequency'] = ['mean', 'count']
-
-    for col in indicators:
-        if col in df_with_indicators.columns:
-            agg_dict[col] = 'mean'
-
-    grouped = df_with_indicators.groupby(['Player', 'Year']).agg(agg_dict).reset_index()
-
-    new_cols = ['Player', 'Year']
-    for col in grouped.columns[2:]:
-        if isinstance(col, tuple):
-            if col[1] == 'mean':
-                new_cols.append(col[0])
-            elif col[1] == 'count':
-                new_cols.append('Matches')
-        else:
-            new_cols.append(col)
-
-    grouped.columns = new_cols
-    grouped = grouped.round(3)
-    grouped.to_csv(os.path.join(output_dir, 'yearly_tactics_stats.csv'), index=False)
-
-    summary_cols = [col for col in grouped.columns if col not in ['Player', 'Year']]
-    summary_agg = {}
-    for col in summary_cols:
-        if col == 'Matches':
-            summary_agg[col] = 'sum'
-        else:
-            summary_agg[col] = 'mean'
-
-    summary = grouped.groupby('Player')[summary_cols].agg(summary_agg).reset_index()
-    summary = summary.round(3)
-    summary.to_csv(os.path.join(output_dir, 'career_tactics_stats.csv'), index=False)
-
-    match_cols = ['Player', 'Match', 'Result', 'Year'] + [col for col in indicators if
-                                                          col in df_with_indicators.columns]
-    match_stats = df_with_indicators[match_cols].round(3)
-    match_stats.to_csv(os.path.join(output_dir, 'match_tactics_stats.csv'), index=False)
-
-    available_indicators = [col for col in indicators if col in summary.columns]
-    if available_indicators:
-        top_performers = []
-        for metric in available_indicators:
-            if summary[metric].notna().sum() > 0:
-                top_10 = summary.nlargest(10, metric)[['Player', metric, 'Matches']].copy()
+        main_aggregation_key = 'Net_Game_Frequency'
+        
+    aggregation_rules = {
+        main_aggregation_key: ['mean', 'count']
+    }
+    
+    for indicator in TACTICS_INDICATORS:
+        if indicator in dataframe_with_indicators.columns:
+            aggregation_rules[indicator] = 'mean'
+            
+    yearly_stats = dataframe_with_indicators.groupby(['Player', 'Year']).agg(aggregation_rules).reset_index()
+    
+    formatted_columns = ['Player', 'Year']
+    for column_name, aggregation_type in yearly_stats.columns[2:]:
+        if aggregation_type == 'mean':
+            formatted_columns.append(column_name)
+        elif aggregation_type == 'count':
+            formatted_columns.append('Matches')
+            
+    yearly_stats.columns = formatted_columns
+    yearly_stats = yearly_stats.round(3)
+    
+    yearly_stats_path = os.path.join(output_directory, 'yearly_tactics_stats.csv')
+    yearly_stats.to_csv(yearly_stats_path, index=False)
+    
+    summary_columns = [col for col in yearly_stats.columns if col not in ['Player', 'Year']]
+    summary_aggregation = {
+        column: ('sum' if column == 'Matches' else 'mean') 
+        for column in summary_columns
+    }
+    
+    career_stats = yearly_stats.groupby('Player')[summary_columns].agg(summary_aggregation).reset_index()
+    career_stats = career_stats.round(3)
+    
+    career_stats_path = os.path.join(output_directory, 'career_tactics_stats.csv')
+    career_stats.to_csv(career_stats_path, index=False)
+    
+    match_view_columns = ['Player', 'Match', 'Result', 'Year'] + [
+        col for col in TACTICS_INDICATORS if col in dataframe_with_indicators.columns
+    ]
+    match_stats = dataframe_with_indicators[match_view_columns].round(3)
+    
+    match_stats_path = os.path.join(output_directory, 'match_tactics_stats.csv')
+    match_stats.to_csv(match_stats_path, index=False)
+    
+    available_metrics = [col for col in TACTICS_INDICATORS if col in career_stats.columns]
+    
+    if available_metrics:
+        top_performers_collection = []
+        
+        for metric in available_metrics:
+            if career_stats[metric].notna().sum() > 0:
+                top_10 = career_stats.nlargest(10, metric)[['Player', metric, 'Matches']].copy()
                 top_10['Metric'] = metric
                 top_10['Rank'] = range(1, 11)
                 top_10['Value'] = top_10[metric]
-                top_performers.append(top_10[['Player', 'Metric', 'Rank', 'Value', 'Matches']])
-
-        if top_performers:
-            all_tops = pd.concat(top_performers, ignore_index=True)
-            all_tops.to_csv(os.path.join(output_dir, 'top_tactics_performers.csv'), index=False)
-
-    print("Tactics analysis files created:")
-    print("- yearly_tactics_stats.csv")
-    print("- career_tactics_stats.csv")
-    print("- match_tactics_stats.csv")
-    if available_indicators:
-        print("- top_tactics_performers.csv")
-
-    return df_with_indicators
-
+                
+                selected_cols = ['Player', 'Metric', 'Rank', 'Value', 'Matches']
+                top_performers_collection.append(top_10[selected_cols])
+                
+        if top_performers_collection:
+            top_performers_df = pd.concat(top_performers_collection, ignore_index=True)
+            top_performers_path = os.path.join(output_directory, 'top_tactics_performers.csv')
+            top_performers_df.to_csv(top_performers_path, index=False)
+            
+    return dataframe_with_indicators
 
 if __name__ == "__main__":
     analyze_tactics_data()

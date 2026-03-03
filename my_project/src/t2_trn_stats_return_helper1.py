@@ -2,44 +2,44 @@ import re
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
+def extract_year(match_string):
+    year_pattern = r'\b(20\d{2})\b'
+    year_match = re.search(year_pattern, match_string)
+    
+    if year_match:
+        extracted_year = year_match.group(1)
+        return int(extracted_year)
+        
+    return None
 
-def extract_year(match_str):
-    match = re.search(r'\b(20\d{2})\b', match_str)
-    return int(match.group(1)) if match else None
-
-
-def learn_return_weights(df):
-    pca = PCA(n_components=1)
-    scaler = StandardScaler()
-
-    return_cols = ['Overall_RiP', 'Overall_RiP_W', 'Overall_RetWnr']
-    available_cols = [col for col in return_cols if col in df.columns]
-
-    if len(available_cols) > 0:
-        return_data = df[available_cols].dropna()
-        if len(return_data) > 0:
-            scaled_data = scaler.fit_transform(return_data)
-            pca.fit(scaled_data)
-            return_weights = abs(pca.components_[0])
-            return_weights = return_weights / return_weights.sum()
-        else:
-            return_weights = [0.4, 0.4, 0.2]
-    else:
-        return_weights = [0.4, 0.4, 0.2]
-
-    first_second_cols = ['First_RiP', 'Second_RiP']
-    available_serve_cols = [col for col in first_second_cols if col in df.columns]
-
-    if len(available_serve_cols) == 2:
-        serve_data = df[available_serve_cols].dropna()
-        if len(serve_data) > 0:
-            first_importance = serve_data['First_RiP'].std()
-            second_importance = serve_data['Second_RiP'].std()
-            total_importance = first_importance + second_importance + 0.001
-            serve_weights = [first_importance / total_importance, second_importance / total_importance]
-        else:
-            serve_weights = [0.6, 0.4]
-    else:
-        serve_weights = [0.6, 0.4]
-
-    return return_weights, serve_weights
+def learn_return_weights(dataframe):
+    pca_analyzer = PCA(n_components=1)
+    data_scaler = StandardScaler()
+    
+    return_metric_columns = ['Overall_RiP', 'Overall_RiP_W', 'Overall_RetWnr']
+    
+    existing_columns = dataframe.columns
+    available_metrics = [col for col in return_metric_columns if col in existing_columns]
+    
+    if available_metrics:
+        return_data_subset = dataframe[available_metrics]
+        cleaned_return_data = return_data_subset.dropna()
+        
+        if not cleaned_return_data.empty:
+            scaled_return_data = data_scaler.fit_transform(cleaned_return_data)
+            pca_analyzer.fit(scaled_return_data)
+            
+            raw_pca_components = pca_analyzer.components_[0]
+            absolute_contribution = abs(raw_pca_components)
+            
+            total_contribution_sum = absolute_contribution.sum()
+            normalized_return_weights = absolute_contribution / total_contribution_sum
+            
+            serve_type_importance = [0.6, 0.4]
+            
+            return normalized_return_weights, serve_type_importance
+            
+    default_return_weights = [0.4, 0.4, 0.2]
+    default_serve_type_weights = [0.6, 0.4]
+    
+    return default_return_weights, default_serve_type_weights

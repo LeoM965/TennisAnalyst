@@ -4,42 +4,62 @@ import re
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
+def extract_year(match_string):
+    year_regex_pattern = r'\b(20\d{2})\b'
+    regex_match = re.search(year_regex_pattern, match_string)
+    
+    if regex_match:
+        year_string = regex_match.group(1)
+        return int(year_string)
+        
+    return None
 
-def extract_year(match_str):
-    match = re.search(r'\b(20\d{2})\b', match_str)
-    return int(match.group(1)) if match else None
-
-
-def learn_serve_weights(df):
-    pca = PCA(n_components=1)
-    scaler = StandardScaler()
-
-    serve_cols = ['Overall_Unret', 'Overall_W3', 'Overall_RiP']
-    available_serve_cols = [col for col in serve_cols if col in df.columns]
-
-    if len(available_serve_cols) > 0:
-        serve_data = df[available_serve_cols].dropna()
-        if len(serve_data) > 0:
-            scaled_data = scaler.fit_transform(serve_data)
-            pca.fit(scaled_data)
-            serve_weights = abs(pca.components_[0])
-            serve_weights = serve_weights / serve_weights.sum()
+def learn_serve_weights(dataframe):
+    pca_calculator = PCA(n_components=1)
+    data_normalizer = StandardScaler()
+    
+    serve_power_metrics = ['Overall_Unret', 'Overall_W3', 'Overall_RiP']
+    
+    existing_df_columns = dataframe.columns
+    valid_serve_metrics = [col for col in serve_power_metrics if col in existing_df_columns]
+    
+    if valid_serve_metrics:
+        serve_data_subset = dataframe[valid_serve_metrics]
+        cleaned_serve_data = serve_data_subset.dropna()
+        
+        if not cleaned_serve_data.empty:
+            normalized_serve_data = data_normalizer.fit_transform(cleaned_serve_data)
+            pca_calculator.fit(normalized_serve_data)
+            
+            raw_influence_components = pca_calculator.components_[0]
+            absolute_metric_influence = abs(raw_influence_components)
+            
+            total_influence_sum = absolute_metric_influence.sum()
+            normalized_serve_weights = absolute_metric_influence / total_influence_sum
         else:
-            serve_weights = [0.4, 0.3, 0.3]
+            normalized_serve_weights = np.array([0.4, 0.3, 0.3])
     else:
-        serve_weights = [0.4, 0.3, 0.3]
-
-    if 'First_Unret' in df.columns and 'Second_Unret' in df.columns:
-        first_second_data = df[['First_Unret', 'Second_Unret']].dropna()
-
-        if len(first_second_data) > 0:
-            first_importance = first_second_data['First_Unret'].std()
-            second_importance = first_second_data['Second_Unret'].std()
-            total_importance = first_importance + second_importance + 0.001
-            type_weights = [first_importance / total_importance, second_importance / total_importance]
+        normalized_serve_weights = np.array([0.4, 0.3, 0.3])
+        
+    has_type_metrics = 'First_Unret' in dataframe.columns and 'Second_Unret' in dataframe.columns
+    
+    if has_type_metrics:
+        serve_type_subset = dataframe[['First_Unret', 'Second_Unret']]
+        cleaned_type_data = serve_type_subset.dropna()
+        
+        if not cleaned_type_data.empty:
+            first_serve_variability = cleaned_type_data['First_Unret'].std()
+            second_serve_variability = cleaned_type_data['Second_Unret'].std()
+            
+            combined_variability_sum = first_serve_variability + second_serve_variability + 0.001
+            
+            type_importance_balance = [
+                first_serve_variability / combined_variability_sum, 
+                second_serve_variability / combined_variability_sum
+            ]
         else:
-            type_weights = [0.7, 0.3]
+            type_importance_balance = [0.7, 0.3]
     else:
-        type_weights = [0.7, 0.3]
-
-    return serve_weights, type_weights
+        type_importance_balance = [0.7, 0.3]
+        
+    return normalized_serve_weights, type_importance_balance
