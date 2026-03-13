@@ -1,0 +1,18 @@
+# IDE settings
+.idea/
+.vscode/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data outputs/plots (generated files)
+my_project/src/output_*/
+
+# Processed data
+data/processed/
+
+# System files
+Thumbs.db
+Desktop.ini
