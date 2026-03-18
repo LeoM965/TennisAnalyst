@@ -1,31 +1,30 @@
 import pandas as pd
 import numpy as np
-from t2_trn_stats_tactics_helper1 import learn_tactics_weights
+from t2_trn_stats_tactics_weights import learn_tactics_weights
 from constants import TACTICS_PCT_COLS
 
-def calculate_tactics_indicators(dataframe):
+def calculate_tactics_indicators(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+    Calculate tactics indicators based on the provided dataframe.
+    """
     tactical_indicators_df = dataframe.copy()
     
-    original_column_list = dataframe.columns.tolist()
-    
-    has_sufficient_columns = len(original_column_list) >= 16
-    if has_sufficient_columns:
-        tactical_column_mapping = {
-            original_column_list[3]: 'SnV_Freq',
-            original_column_list[4]: 'SnV_W_Pct',
-            original_column_list[5]: 'Net_Freq',
-            original_column_list[6]: 'Net_W_Pct',
-            original_column_list[7]: 'FH_Wnr_Pct',
-            original_column_list[8]: 'FH_DTL_Wnr_Pct',
-            original_column_list[9]: 'FH_IO_Wnr_Pct',
-            original_column_list[10]: 'BH_Wnr_Pct',
-            original_column_list[11]: 'BH_DTL_Wnr_Pct',
-            original_column_list[12]: 'Drop_Freq',
-            original_column_list[13]: 'Drop_Wnr_Pct',
-            original_column_list[14]: 'RallyAgg',
-            original_column_list[15]: 'ReturnAgg'
-        }
-        tactical_indicators_df = tactical_indicators_df.rename(columns=tactical_column_mapping)
+    tactical_column_mapping = {
+        'SnV Freq': 'SnV_Freq',
+        'SnV W%': 'SnV_W_Pct',
+        'Net Freq': 'Net_Freq',
+        'Net W%': 'Net_W_Pct',
+        'FH Wnr%': 'FH_Wnr_Pct',
+        'FH DTL Wnr%': 'FH_DTL_Wnr_Pct',
+        'FH IO Wnr%': 'FH_IO_Wnr_Pct',
+        'BH Wnr%': 'BH_Wnr_Pct',
+        'BH DTL Wnr%': 'BH_DTL_Wnr_Pct',
+        'Drop Freq': 'Drop_Freq',
+        'Drop Wnr%': 'Drop_Wnr_Pct',
+        'RallyAgg': 'RallyAgg',
+        'ReturnAgg': 'ReturnAgg'
+    }
+    tactical_indicators_df = tactical_indicators_df.rename(columns=tactical_column_mapping)
         
     for tactics_pct_col in TACTICS_PCT_COLS:
         if tactics_pct_col in tactical_indicators_df.columns:

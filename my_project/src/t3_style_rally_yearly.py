@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
-from t3_style_rally_yearly_helper1 import STREAMLIT_CONFIG, KEY_METRICS, HEATMAP_METRICS, INSIGHTS
-from t3_style_rally_yearly_helper2 import (
+from t3_style_rally_yearly_config import STREAMLIT_CONFIG, KEY_METRICS, HEATMAP_METRICS, INSIGHTS
+from t3_style_rally_yearly_analysis import (
     load_and_process_data, create_line_plot, create_heatmap, display_player_metrics,
     create_style_distribution_plot, create_player_performance_plot, generate_csv_files
 )

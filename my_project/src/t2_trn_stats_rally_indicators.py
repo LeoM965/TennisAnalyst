@@ -1,9 +1,12 @@
 import numpy as np
 import pandas as pd
-from t2_trn_stats_rally_helper1 import learn_match_control_weights, learn_weights_from_data
+from t2_trn_stats_rally_weights import learn_match_control_weights, learn_weights_from_data
 from constants import RALLY_PERCENTAGE_COLS
 
-def calculate_rally_indicators(dataframe):
+def calculate_rally_indicators(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+    Calculate rally indicators based on the provided dataframe.
+    """
     rally_indicators_df = dataframe.copy()
     
     percentage_column_list = RALLY_PERCENTAGE_COLS + ['FH/GS', 'BH Slice%']

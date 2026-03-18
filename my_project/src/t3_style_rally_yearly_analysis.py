@@ -6,11 +6,17 @@ from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 from pathlib import Path
-from t3_style_rally_yearly_helper1 import *
+from t3_style_rally_yearly_config import *
 
 
 @st.cache_data
-def load_and_process_data():
+def load_and_process_data() -> tuple[pd.DataFrame, pd.DataFrame]:
+    '''
+    Loads yearly and career stats data and applies styling clusters.
+    
+    Returns:
+        tuple (pd.DataFrame, pd.DataFrame): yearly and career dataframes with clusters attached.
+    '''
     try:
         df_yearly = pd.read_csv(DATA_PATHS['yearly'])
         df_career = pd.read_csv(DATA_PATHS['career'])

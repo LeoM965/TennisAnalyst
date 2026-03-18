@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
-from t3_style_rally_career_helper1 import FEATURES, SCATTER_OPTIONS, STREAMLIT_CONFIG
-from t3_style_rally_career_helper2 import (
+from t3_style_rally_career_config import FEATURES, SCATTER_OPTIONS, STREAMLIT_CONFIG
+from t3_style_rally_career_analysis import (
     load_and_cluster_data, create_scatter_plot, create_bar_plot,
     create_style_distribution, create_heatmap, save_analysis_files
 )

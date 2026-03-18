@@ -1,16 +1,11 @@
 import pandas as pd
 import os
-import shutil
-from t2_we_stats_helper1 import extract_year, calculate_tennis_indicators
+from t2_we_stats_indicators import extract_year, calculate_tennis_indicators
 from constants import WTA_WINNERS_UE
 
 def analyze_evolution_with_indicators(csv_path=WTA_WINNERS_UE):
     output_directory = 'output_we'
-    
-    if os.path.exists(output_directory):
-        shutil.rmtree(output_directory)
-    os.makedirs(output_directory)
-    
+    os.makedirs(output_directory, exist_ok=True)
     try:
         dataframe = pd.read_csv(csv_path)
     except Exception as error:

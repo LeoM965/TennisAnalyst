@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from t3_style_rally_match_helper1 import COLORS, STREAMLIT_CONFIG
-from t3_style_rally_match_helper2 import (
+from t3_style_rally_match_config import COLORS, STREAMLIT_CONFIG
+from t3_style_rally_match_analysis import (
     load_data, get_player_style, process_data, get_tournament_stats,
     get_comparison, run_ml_analysis, create_plots
 )

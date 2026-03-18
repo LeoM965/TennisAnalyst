@@ -6,13 +6,20 @@ from sklearn.preprocessing import StandardScaler
 from pathlib import Path
 import streamlit as st
 import warnings
-from t3_style_rally_career_helper1 import FEATURES, STYLE_NAMES, COLORS, KEY_FEATURES_HEATMAP, DATA_PATH, OUTPUT_DIR
+from t3_style_rally_career_config import FEATURES, STYLE_NAMES, COLORS, KEY_FEATURES_HEATMAP, DATA_PATH, OUTPUT_DIR
 
 warnings.filterwarnings('ignore')
 
 
 @st.cache_data
-def load_and_cluster_data():
+def load_and_cluster_data() -> pd.DataFrame:
+    '''
+    Loads career stats data from CSV and applies KMeans clustering 
+    to categorize players into different playing styles.
+    
+    Returns:
+        pd.DataFrame: A DataFrame with the original stats and new 'Cluster' and 'Style' columns.
+    '''
     try:
         df = pd.read_csv(DATA_PATH)
 

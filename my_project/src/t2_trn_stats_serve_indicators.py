@@ -1,34 +1,36 @@
 import pandas as pd
 import numpy as np
-from t2_trn_stats_serve_helper1 import learn_serve_weights
+from t2_trn_stats_serve_weights import learn_serve_weights
 from constants import SERVE_PCT_COLS
 
-def calculate_serve_indicators(dataframe):
+def calculate_serve_indicators(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+    Calculate serve indicators based on the provided dataframe.
+    """
     serve_indicators_df = dataframe.copy()
     
-    original_column_list = dataframe.columns.tolist()
-    
-    has_necessary_columns = len(original_column_list) >= 19
-    if has_necessary_columns:
-        serve_column_mapping = {
-            original_column_list[3]: 'Overall_Unret',
-            original_column_list[4]: 'Overall_W3',
-            original_column_list[5]: 'Overall_RiP',
-            original_column_list[6]: 'First_Unret',
-            original_column_list[7]: 'First_W3',
-            original_column_list[8]: 'First_RiP',
-            original_column_list[9]: 'First_D_Wide',
-            original_column_list[10]: 'First_A_Wide',
-            original_column_list[11]: 'First_BP_Wide',
-            original_column_list[12]: 'Second_Unret',
-            original_column_list[13]: 'Second_W3',
-            original_column_list[14]: 'Second_RiP',
-            original_column_list[15]: 'Second_D_Wide',
-            original_column_list[16]: 'Second_A_Wide',
-            original_column_list[17]: 'Second_BP_Wide',
-            original_column_list[18]: 'Second_Serve_Aggression_Raw'
-        }
-        serve_indicators_df = serve_indicators_df.rename(columns=serve_column_mapping)
+    serve_column_mapping = {
+        'Unret%': 'Overall_Unret',
+        'W3%': 'Overall_W3',
+        'Unnamed: 4': 'Overall_W3',
+        'RiP%': 'Overall_RiP',
+        '1st: Unret%': 'First_Unret',
+        'W3%.1': 'First_W3',
+        'Unnamed: 7': 'First_W3',
+        'RiP%.1': 'First_RiP',
+        'D Wide%': 'First_D_Wide',
+        'A Wide%': 'First_A_Wide',
+        'BP Wide%': 'First_BP_Wide',
+        '2nd: Unret%': 'Second_Unret',
+        'W3%.2': 'Second_W3',
+        'Unnamed: 13': 'Second_W3',
+        'RiP%.2': 'Second_RiP',
+        'D Wide%.1': 'Second_D_Wide',
+        'A Wide%.1': 'Second_A_Wide',
+        'BP Wide%.1': 'Second_BP_Wide',
+        '2ndAgg': 'Second_Serve_Aggression_Raw'
+    }
+    serve_indicators_df = serve_indicators_df.rename(columns=serve_column_mapping)
         
     for serve_pct_col in SERVE_PCT_COLS:
         if serve_pct_col in serve_indicators_df.columns:

@@ -6,12 +6,18 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import streamlit as st
 import warnings
-from t3_style_rally_match_helper1 import *
+from t3_style_rally_match_config import *
 
 warnings.filterwarnings('ignore')
 
 @st.cache_data
-def load_data():
+def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
+    '''
+    Loads match-level and career-level stats data from CSV.
+    
+    Returns:
+        tuple: (matches_df, career_df)
+    '''
     try:
         matches_df = pd.read_csv(DATA_PATHS['matches'])
         career_df = pd.read_csv(DATA_PATHS['career'])
@@ -20,7 +26,17 @@ def load_data():
         st.error("Required CSV files not found")
         return None, None
 
-def get_player_style(career_df, player_name):
+def get_player_style(career_df: pd.DataFrame, player_name: str) -> tuple:
+    '''
+    Extracts the playing style given a career DataFrame and a player name.
+    
+    Args:
+        career_df (pd.DataFrame): The career DataFrame.
+        player_name (str): The player's name.
+        
+    Returns:
+        tuple: (Style name, cluster index)
+    '''
     if career_df is None:
         return None, None
 

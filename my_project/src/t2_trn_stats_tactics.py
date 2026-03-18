@@ -1,18 +1,13 @@
 import pandas as pd
 import numpy as np
 import os
-import shutil
-from t2_trn_stats_rally_helper1 import extract_year
-from t2_trn_stats_tactics_helper2 import calculate_tactics_indicators
+from t2_trn_stats_rally_weights import extract_year
+from t2_trn_stats_tactics_indicators import calculate_tactics_indicators
 from constants import WTA_MCP_TACTICS, TACTICS_INDICATORS
 
 def analyze_tactics_data(csv_path=WTA_MCP_TACTICS):
     output_directory = 'output_tactics'
-    
-    if os.path.exists(output_directory):
-        shutil.rmtree(output_directory)
-    os.makedirs(output_directory)
-    
+    os.makedirs(output_directory, exist_ok=True)
     dataframe = pd.read_csv(csv_path)
     dataframe.columns = dataframe.columns.str.strip()
     

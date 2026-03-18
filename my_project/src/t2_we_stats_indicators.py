@@ -16,7 +16,10 @@ def extract_year(match_string):
         
     return None
 
-def calculate_tennis_indicators(dataframe):
+def calculate_tennis_indicators(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+    Calculate tennis indicators based on the provided dataframe.
+    """
     tennis_indicators_df = dataframe.copy()
     
     for pct_metric_col in WEB_PCT_COLS:

@@ -102,35 +102,35 @@ TennisAnalyst/
 │       ├── t1_we_scrapping.py            # Tier 1: Scrape winners/unforced errors
 │       │
 │       ├── t2_trn_stats_rally.py         # Tier 2: Rally analysis pipeline
-│       ├── t2_trn_stats_rally_helper1.py # ├── Year extraction, PCA weight learning
-│       ├── t2_trn_stats_rally_helper2.py # └── Rally indicator calculation engine
+│       ├── t2_trn_stats_rally_weights.py # ├── Year extraction, PCA weight learning
+│       ├── t2_trn_stats_rally_indicators.py # └── Rally indicator calculation engine
 │       │
 │       ├── t2_trn_stats_serve.py         # Tier 2: Serve analysis pipeline
-│       ├── t2_trn_stats_serve_helper1.py # ├── PCA serve weight learning
-│       ├── t2_trn_stats_serve_helper2.py # └── Serve indicator calculation engine
+│       ├── t2_trn_stats_serve_weights.py # ├── PCA serve weight learning
+│       ├── t2_trn_stats_serve_indicators.py # └── Serve indicator calculation engine
 │       │
 │       ├── t2_trn_stats_return.py        # Tier 2: Return analysis pipeline
-│       ├── t2_trn_stats_return_helper1.py# ├── PCA return weight learning
-│       ├── t2_trn_stats_return_helper2.py# └── Return indicator calculation engine
+│       ├── t2_trn_stats_return_weights.py# ├── PCA return weight learning
+│       ├── t2_trn_stats_return_indicators.py# └── Return indicator calculation engine
 │       │
 │       ├── t2_trn_stats_tactics.py       # Tier 2: Tactics analysis pipeline
-│       ├── t2_trn_stats_tactics_helper1.py# ├── PCA tactics weight learning
-│       ├── t2_trn_stats_tactics_helper2.py# └── Tactics indicator calculation engine
+│       ├── t2_trn_stats_tactics_weights.py# ├── PCA tactics weight learning
+│       ├── t2_trn_stats_tactics_indicators.py# └── Tactics indicator calculation engine
 │       │
 │       ├── t2_we_stats.py                # Tier 2: Winners/Errors analysis pipeline
-│       ├── t2_we_stats_helper1.py        # └── WE indicator calculation engine
+│       ├── t2_we_stats_indicators.py        # └── WE indicator calculation engine
 │       │
 │       ├── t3_style_rally_career.py      # Tier 3: Career style Streamlit dashboard
-│       ├── t3_style_rally_career_helper1.py# ├── Configuration, feature lists, style names
-│       ├── t3_style_rally_career_helper2.py# └── Clustering, scatter/bar/heatmap plots
+│       ├── t3_style_rally_career_config.py# ├── Configuration, feature lists, style names
+│       ├── t3_style_rally_career_analysis.py# └── Clustering, scatter/bar/heatmap plots
 │       │
 │       ├── t3_style_rally_yearly.py      # Tier 3: Yearly evolution Streamlit dashboard
-│       ├── t3_style_rally_yearly_helper1.py# ├── Configuration, heatmap metrics
-│       ├── t3_style_rally_yearly_helper2.py# └── Data loading, line/heatmap/distribution plots
+│       ├── t3_style_rally_yearly_config.py# ├── Configuration, heatmap metrics
+│       ├── t3_style_rally_yearly_analysis.py# └── Data loading, line/heatmap/distribution plots
 │       │
 │       ├── t3_style_rally_match.py       # Tier 3: Tournament analysis Streamlit dashboard
-│       ├── t3_style_rally_match_helper1.py# ├── Configuration, data paths
-│       ├── t3_style_rally_match_helper2.py# └── ML analysis, tournament stats, plots
+│       ├── t3_style_rally_match_config.py# ├── Configuration, data paths
+│       ├── t3_style_rally_match_analysis.py# └── ML analysis, tournament stats, plots
 │       │
 │       ├── h2h.py                        # Head-to-Head analysis Streamlit dashboard
 │       │
@@ -159,11 +159,11 @@ Selenium-based scrapers navigate to each player's TennisAbstract profile page an
 ### Stage 2: Indicator Computation
 Each Tier 2 module reads the corresponding raw CSV, cleans percentage columns (stripping `%` symbols and converting to fractions), then applies a series of statistical transformations:
 
-1. **PCA Weight Learning** — Principal Component Analysis is applied to groups of related metrics (e.g., rally win percentages at different lengths) to learn data-driven importance weights. The first principal component's loadings are normalized to produce weights that reflect each metric's contribution to the overall variance.
-2. **Correlation-Based Weighting** — For power metrics (FHP/BHP), the correlation between forehand and backhand power determines whether to weight tactical diversity more or less heavily.
-3. **Result-Adjusted Multipliers** — Winning matches receive a 1.1–1.15x bonus, losing matches a 0.85–0.9x penalty, reflecting that performance in winning conditions is inherently more valuable.
-4. **Exponential Decay** — Used for metrics like Rally Length Efficiency (`exp(-length/5)`) and Court Coverage Efficiency (`exp(-length/6)`) to produce diminishing-returns curves.
-5. **Hyperbolic Tangent Normalization** — `tanh()` is used to bound metrics like Power-Control Balance and Court Position Strategy into the (−1, 1) range.
+1.  **PCA Weight Learning** — Principal Component Analysis is applied to groups of related metrics (e.g., rally win percentages at different lengths) to learn data-driven importance weights. The first principal component's loadings are normalized to produce weights that reflect each metric's contribution to the overall variance.
+2.  **Correlation-Based Weighting** — For power metrics (FHP/BHP), the correlation between forehand and backhand power determines whether to weight tactical diversity more or less heavily.
+3.  **Result-Adjusted Multipliers** — Winning matches receive a 1.1–1.15x bonus, losing matches a 0.85–0.9x penalty, reflecting that performance in winning conditions is inherently more valuable.
+4.  **Exponential Decay** — Used for metrics like Rally Length Efficiency (`exp(-length/5)`) and Court Coverage Efficiency (`exp(-length/6)`) to produce diminishing-returns curves.
+5.  **Hyperbolic Tangent Normalization** — `tanh()` is used to bound metrics like Power-Control Balance and Court Position Strategy into the (−1, 1) range.
 
 ### Stage 3: Aggregation & Output
 Each Tier 2 module produces four standard output files:
@@ -209,31 +209,31 @@ Each Tier 2 module follows an identical architectural pattern:
 Main Script (t2_*_stats_*.py)
 ├── Reads raw CSV from data/raw/
 ├── Extracts year from match identifiers
-├── Calls helper2's indicator calculator
+├── Calls indicators helper for engine
 ├── Aggregates: match → yearly → career → top performers
 └── Saves 4 CSV files to output_*/
 
-Helper 1 (t2_*_helper1.py)
+Weights Helper (t2_*_weights.py)
 ├── extract_year() — regex extraction of YYYY from match strings
 └── learn_*_weights() — PCA-based weight learning
 
-Helper 2 (t2_*_helper2.py)
+Indicators Helper (t2_*_indicators.py)
 ├── Percentage column cleaning (strip %, divide by 100)
-├── Column renaming (positional → semantic names)
-├── Calls helper1 for weight learning
-└── Computes all indicator formulas
+├── Semantic column detection (hardcoded mapping)
+├── Calls weights helper for weight learning
+└── Computes all indicator formulas with type hints and docstrings
 ```
 
 ### Rally Analysis (`t2_trn_stats_rally.py` + helpers)
 
 Processes serve/return rally lengths and win percentages at different rally lengths (1–3, 4–6, 7–9, 10+ shots).
 
-**PCA Weight Learning (`t2_trn_stats_rally_helper1.py`):**
+**PCA Weight Learning (t2_trn_stats_rally_weights.py):**
 - Learns importance weights for rally win percentage columns (`1-3 W%`, `4-6 W%`, `7-9 W%`, `10+ W%`) using PCA's first component loadings
 - Learns tactical weights from forehand/backhand power correlation: if `|corr(FHP, BHP)| > 0.5`, then `[0.4, 0.4, 0.2]`; otherwise `[0.3, 0.3, 0.4]` (more weight on adaptability when power is unbalanced)
 - Learns match control weights by comparing short-rally and long-rally impact on winning vs losing
 
-**Indicator Formulas (`t2_trn_stats_rally_helper2.py`):**
+**Indicator Formulas (t2_trn_stats_rally_indicators.py):**
 
 | Indicator | Formula |
 |-----------|---------|

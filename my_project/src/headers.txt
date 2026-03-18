@@ -1,0 +1,5 @@
+mcp-serve headers: ['Match', 'Result', 'Unret%', '', 'RiP&nbsp;W%', '1st:&nbsp;Unret%', '', 'RiP&nbsp;W%', 'D&nbsp;Wide%', 'A&nbsp;Wide%', 'BP&nbsp;Wide%', '2nd:&nbsp;Unret%', '', 'RiP&nbsp;W%', 'D&nbsp;Wide%', 'A&nbsp;Wide%', 'BP&nbsp;Wide%', '2ndAgg']
+mcp-return headers: ['Match', 'Result', 'RiP%', 'RiP&nbsp;W%', 'RetWnr%', 'FH/BH', 'RDI', 'Slice%', '1st:&nbsp;RiP%', 'RiP&nbsp;W%', 'RetWnr%', 'RDI', 'Slice%', '2nd:&nbsp;RiP%', 'RiP&nbsp;W%', 'RetWnr%', 'RDI', 'Slice%']
+mcp-rally headers: ['Match', 'Result', 'RallyLen', 'RLen-Serve', 'RLen-Return', '1-3&nbsp;W%', '4-6&nbsp;W%', '7-9&nbsp;W%', '10+&nbsp;W%', 'FH/GS', 'BH&nbsp;Slice%', 'FHP', 'FHP/100', 'BHP', 'BHP/100']
+Failed mcp-tactics: HTTP Error 429: Too Many Requests
+Failed winners-errors: HTTP Error 429: Too Many Requests

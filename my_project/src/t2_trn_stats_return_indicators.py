@@ -1,34 +1,33 @@
 import pandas as pd
 import numpy as np
-from t2_trn_stats_return_helper1 import learn_return_weights
+from t2_trn_stats_return_weights import learn_return_weights
 from constants import RETURN_PCT_COLS
 
-def calculate_return_indicators(dataframe):
+def calculate_return_indicators(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+    Calculate return indicators based on the provided dataframe.
+    """
     return_indicators_df = dataframe.copy()
     
-    original_column_names = dataframe.columns.tolist()
-    
-    has_sufficient_columns = len(original_column_names) >= 19
-    if has_sufficient_columns:
-        return_column_mapping = {
-            original_column_names[3]: 'Overall_RiP',
-            original_column_names[4]: 'Overall_RiP_W',
-            original_column_names[5]: 'Overall_RetWnr',
-            original_column_names[6]: 'FH_BH',
-            original_column_names[7]: 'Overall_RDI',
-            original_column_names[8]: 'Overall_Slice',
-            original_column_names[9]: 'First_RiP',
-            original_column_names[10]: 'First_RiP_W',
-            original_column_names[11]: 'First_RetWnr',
-            original_column_names[12]: 'First_RDI',
-            original_column_names[13]: 'First_Slice',
-            original_column_names[14]: 'Second_RiP',
-            original_column_names[15]: 'Second_RiP_W',
-            original_column_names[16]: 'Second_RetWnr',
-            original_column_names[17]: 'Second_RDI',
-            original_column_names[18]: 'Second_Slice'
-        }
-        return_indicators_df = return_indicators_df.rename(columns=return_column_mapping)
+    return_column_mapping = {
+        'RiP%': 'Overall_RiP',
+        'RiP W%': 'Overall_RiP_W',
+        'RetWnr%': 'Overall_RetWnr',
+        'FH/BH': 'FH_BH',
+        'RDI': 'Overall_RDI',
+        'Slice%': 'Overall_Slice',
+        '1st: RiP%': 'First_RiP',
+        'RiP W%.1': 'First_RiP_W',
+        'RetWnr%.1': 'First_RetWnr',
+        'RDI.1': 'First_RDI',
+        'Slice%.1': 'First_Slice',
+        '2nd: RiP%': 'Second_RiP',
+        'RiP W%.2': 'Second_RiP_W',
+        'RetWnr%.2': 'Second_RetWnr',
+        'RDI.2': 'Second_RDI',
+        'Slice%.2': 'Second_Slice'
+    }
+    return_indicators_df = return_indicators_df.rename(columns=return_column_mapping)
         
     for pct_col_name in RETURN_PCT_COLS:
         if pct_col_name in return_indicators_df.columns:
